@@ -41,6 +41,13 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+
+    saveBook: async (parent, args, context) => {
+      const increment = Math.abs(quantity) * +1;
+      return await Book.findByIdAndUpdate(_id), { $inc: { quantity: increment } }, { new: true };
+    },
+
+    
   },
 };
 
