@@ -43,12 +43,33 @@ const resolvers = {
     },
 
     saveBook: async (parent, args, context) => {
-      const increment = Math.abs(quantity) * +1;
-      return await Book.findByIdAndUpdate(_id), { $inc: { quantity: increment } }, { new: true };
+      const user = await User.findOne({ email });
+      
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: user._id },
+          { $addToSet: { savedBooks: body } },
+          { new: true, runValidators: true }
+        );
+        
+        return updatedUser;
+      }
     },
 
-    
-  },
+    deleteBook: async (parent, args, context) => {
+      const user = await User.findOne({ email });
+
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: user._id },
+          { $pull: { savedBooks: { bookId: args.bookId } } },
+          { new: true, runValidators: true }
+        );
+
+        return updatedUser;
+      }
+    }
+  }
 };
 
 module.exports = resolvers;
