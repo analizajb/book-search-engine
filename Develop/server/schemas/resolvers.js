@@ -51,9 +51,11 @@ const resolvers = {
           { $addToSet: { savedBooks: body } },
           { new: true, runValidators: true }
         );
-        
+
         return updatedUser;
       }
+
+      throw new AuthenticationError('You need to login first');
     },
 
     deleteBook: async (parent, args, context) => {
@@ -68,6 +70,8 @@ const resolvers = {
 
         return updatedUser;
       }
+
+      throw new AuthenticationError('You need to login first');
     }
   }
 };
