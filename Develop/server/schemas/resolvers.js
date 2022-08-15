@@ -5,7 +5,7 @@ const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 const resolvers = {
   Query: {
-    myUser: async (parent, args, context) => {
+    me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({})
           .select("-__v -password")
